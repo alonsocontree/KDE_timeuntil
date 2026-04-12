@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<kcfg xmlns="http://www.kde.org/standards/kcfg/1.0"
+      xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+      xsi:schemaLocation="http://www.kde.org/standards/kcfg/1.0
+      http://www.kde.org/standards/kcfg/1.0/kcfg.xsd">
+  <group name="General">
+    <entry name="eventName" type="String">
+      <label>Nombre del evento</label>
+      <default>Mi evento</default>
+    </entry>
+    <entry name="eventDate" type="String">
+      <label>Fecha del evento (DD-MM-AAAA)</label>
+      <default>31-12-2026</default>
+    </entry>
+    <entry name="daysColor" type="String">
+      <label>Color de los dias</label>
+      <default>#ffffff</default>
+    </entry>
+  </group>
+</kcfg>

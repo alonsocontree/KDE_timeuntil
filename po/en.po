@@ -1,0 +1,88 @@
+msgid ""
+msgstr ""
+"Project-Id-Version: KDE_timeuntil 1.0.0\n"
+"POT-Creation-Date: 2026-04-12 00:00+0000\n"
+"PO-Revision-Date: 2026-04-12 00:00+0000\n"
+"Last-Translator: KDE_timeuntil contributors\n"
+"Language-Team: English\n"
+"Language: en\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+
+#: contents/ui/main.qml
+msgid "Mi evento"
+msgstr "My event"
+
+#: contents/ui/main.qml
+msgid "Fecha invalida"
+msgstr "Invalid date"
+
+#: contents/ui/main.qml
+msgid "Hoy"
+msgstr "Today"
+
+#: contents/ui/main.qml
+msgid "%1 dias"
+msgstr "%1 days"
+
+#: contents/ui/main.qml
+msgid "Hace %1 dias"
+msgstr "%1 days ago"
+
+#: contents/ui/configGeneral.qml
+msgid "Nombre del evento:"
+msgstr "Event name:"
+
+#: contents/ui/configGeneral.qml
+msgid "Ej: Vacaciones"
+msgstr "Example: Vacation"
+
+#: contents/ui/configGeneral.qml
+msgid "Fecha (DD-MM-AAAA):"
+msgstr "Date (DD-MM-YYYY):"
+
+#: contents/ui/configGeneral.qml
+msgid "Color de dias:"
+msgstr "Days color:"
+
+#: contents/ui/configGeneral.qml
+msgid "Blanco"
+msgstr "White"
+
+#: contents/ui/configGeneral.qml
+msgid "Negro"
+msgstr "Black"
+
+#: contents/ui/configGeneral.qml
+msgid "Rojo"
+msgstr "Red"
+
+#: contents/ui/configGeneral.qml
+msgid "Naranja"
+msgstr "Orange"
+
+#: contents/ui/configGeneral.qml
+msgid "Verde"
+msgstr "Green"
+
+#: contents/ui/configGeneral.qml
+msgid "Azul"
+msgstr "Blue"
+
+#: contents/ui/configGeneral.qml
+msgid "Amarillo"
+msgstr "Yellow"
+
+#: contents/config/main.xml
+msgid "Nombre del evento"
+msgstr "Event name"
+
+#: contents/config/main.xml
+msgid "Fecha del evento (DD-MM-AAAA)"
+msgstr "Event date (DD-MM-YYYY)"
+
+#: contents/config/main.xml
+msgid "Color de los dias"
+msgstr "Days color"
