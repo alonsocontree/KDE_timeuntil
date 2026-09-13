@@ -19,6 +19,9 @@ ColumnLayout {
     property font secondaryFont: Qt.application.font
     // Base size in pixels for the big countdown text.
     property real baseSize: 18
+    // Optional text style, e.g. Text.Outline to stay readable on any wallpaper.
+    property int textStyle: Text.Normal
+    property color textStyleColor: "black"
 
     readonly property var countdown: eventDate ? Countdown.computeCountdown(now, eventDate) : null
 
@@ -56,6 +59,8 @@ ColumnLayout {
         font.weight: Font.DemiBold
         horizontalAlignment: Text.AlignHCenter
         wrapMode: Text.WordWrap
+        style: view.textStyle
+        styleColor: view.textStyleColor
     }
 
     Text {
@@ -66,6 +71,8 @@ ColumnLayout {
         font: view.secondaryFont
         horizontalAlignment: Text.AlignHCenter
         wrapMode: Text.WordWrap
+        style: view.textStyle
+        styleColor: view.textStyleColor
     }
 
     Text {
@@ -81,5 +88,7 @@ ColumnLayout {
         font: view.secondaryFont
         horizontalAlignment: Text.AlignHCenter
         wrapMode: Text.WordWrap
+        style: view.textStyle
+        styleColor: view.textStyleColor
     }
 }
