@@ -3,7 +3,9 @@
 A countdown to an event, as a KDE Plasma 6 desktop widget and as a small
 Windows app (TimeUntil). By Alonso Contreras.
 
-![Widget](img/screenshot_widget.png)
+| KDE Plasma | Windows |
+| --- | --- |
+| ![The Plasma widget](img/KDE_timeuntil/05-countdown.png) | ![The Windows app](img/Timeuntil/10-countdown.png) |
 
 ## Features
 
@@ -17,28 +19,24 @@ Windows app (TimeUntil). By Alonso Contreras.
 
 See [CHANGELOG.md](CHANGELOG.md) for what changed in each version.
 
+## Installation guides
+
+- [KDE Plasma widget](docs/install-plasma.md): install, add to the desktop,
+  configure, update and remove.
+- [Windows app](docs/install-windows.md): download, install, use, start with
+  Windows and uninstall.
+
 ## Plasma widget
 
 Requires KDE Plasma 6. The settings page uses Kirigami Addons, which comes
 with Plasma.
 
-### Install
-
-From a release, download `KDE_timeuntil-<version>.plasmoid` and either use
-*Add Widgets → Get New → Install Widget From Local File*, or run:
-
-```sh
-kpackagetool6 --type Plasma/Applet --install KDE_timeuntil-<version>.plasmoid
-```
-
-From this repository (use `--install` the first time):
+Quick install from this repository (use `--install` the first time):
 
 ```sh
 kpackagetool6 --type Plasma/Applet --upgrade plasma/
 systemctl --user restart plasma-plasmashell
 ```
-
-Plasma keeps using the old files until plasmashell restarts.
 
 To try it in a window without touching the desktop:
 
@@ -46,44 +44,20 @@ To try it in a window without touching the desktop:
 plasmawindowed org.kde.kde_timeuntil
 ```
 
-### Upgrading from 1.0
-
-Existing widgets keep their event. Dates saved by 1.0 have no time, so they
-count down to midnight; open the settings to add one.
-
 ## Windows app
 
-Works on Windows 10 and 11.
+Works on Windows 10 and 11. Download `TimeUntil-<version>-setup.exe` or the
+portable zip from the
+[releases page](https://github.com/alonsocontree/KDE_timeuntil/releases), or
+the latest build from the
+[Actions page](https://github.com/alonsocontree/KDE_timeuntil/actions)
+(*Artifacts* section, you need to be signed in to GitHub).
 
-### Download
-
-- **Releases:** `TimeUntil-<version>-setup.exe` (installer) or
-  `TimeUntil-<version>-windows.zip` (portable).
-- **Latest build:** every push builds the app. Open the run on the
-  [Actions page](https://github.com/alonsocontree/KDE_timeuntil/actions) and
-  download `TimeUntil-windows-installer` or `TimeUntil-windows` from its
-  *Artifacts* section (you need to be signed in to GitHub).
-
-The installer is not signed, so Windows SmartScreen warns about it. Choose
-*More info → Run anyway*. It installs for the current user and does not need
-administrator rights.
-
-### Use
-
-- Each countdown is a window on the desktop. Drag it to move it.
-- Right-click a countdown for *Edit…*, *New countdown*, *Lock position* (or
-  *Unlock position* once locked), *Remove* and *Quit*.
-- The notification area icon offers *New countdown*, *Start with Windows* and
-  *Quit*. Windows 11 may hide new icons under the `^` arrow on the taskbar.
+- Each countdown is a window on the desktop that you can drag, lock, edit and
+  remove from its right-click menu.
+- The notification area icon adds countdowns and turns *Start with Windows*
+  on or off.
 - Countdowns stay visible when you show the desktop (Win+D).
-
-### Start with Windows
-
-Either check *Automatically start TimeUntil* during installation, or turn on
-*Start with Windows* in the notification area menu. Both use the same entry,
-and uninstalling removes it.
-
-Settings are stored under `HKEY_CURRENT_USER\Software\TimeUntil`.
 
 ## Development
 
@@ -96,6 +70,7 @@ Settings are stored under `HKEY_CURRENT_USER\Software\TimeUntil`.
 - `po/`: translations used by both versions.
 - `tests/`: unit tests for `countdown.mjs`.
 - `scripts/`: translation, icon and packaging helpers.
+- `docs/`: installation guides; their screenshots are in `img/`.
 
 ### Tests
 
