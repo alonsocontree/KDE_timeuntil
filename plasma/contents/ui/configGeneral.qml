@@ -3,18 +3,25 @@ import QtQuick.Controls
 import QtQuick.Layouts
 import org.kde.kcmutils as KCM
 import org.kde.kirigami as Kirigami
+import org.kde.kirigamiaddons.dateandtime as DateAndTime
+
+import "../code/countdown.mjs" as Countdown
 
 KCM.SimpleKCM {
     id: page
 
     property alias cfg_eventName: eventNameField.text
-    property alias cfg_eventDate: eventDateField.text
+    property string cfg_eventDate
     property alias cfg_daysColor: colorField.text
 
     // The configuration dialog also passes the default value of every entry.
     property string cfg_eventNameDefault
     property string cfg_eventDateDefault
     property string cfg_daysColorDefault
+
+    readonly property var configuredDate: Countdown.parseEventDateTime(cfg_eventDate)
+    // Where the pickers start: the configured date, or today at midnight.
+    readonly property var pickerDate: configuredDate || new Date(new Date().setHours(0, 0, 0, 0))
 
     function syncColorCombo() {
         for (let i = 0; i < colorCombo.model.length; ++i) {
@@ -37,18 +44,35 @@ KCM.SimpleKCM {
             placeholderText: i18n("e.g. Vacation")
         }
 
-        TextField {
-            id: eventDateField
-            Kirigami.FormData.label: i18n("Date (DD-MM-YYYY):")
-            placeholderText: "31-12-2026"
+        RowLayout {
+            Kirigami.FormData.label: i18n("Date and time:")
+
+            Button {
+                icon.name: "view-calendar"
+                text: page.configuredDate
+                    ? page.configuredDate.toLocaleDateString(Qt.locale(), Locale.LongFormat)
+                    : i18n("Pick a date…")
+                onClicked: datePopupComponent.createObject(Overlay.overlay, { value: page.pickerDate }).open()
+            }
+
+            Button {
+                icon.name: "clock"
+                text: page.pickerDate.toLocaleTimeString(Qt.locale(), Locale.ShortFormat)
+                // TimePopup keeps its own `_value`, which it only syncs when the
+                // hour or minute changes, so a time of 00:00 needs it set too.
+                onClicked: timePopupComponent.createObject(Overlay.overlay, {
+                    value: page.pickerDate,
+                    _value: page.pickerDate,
+                }).open()
+            }
         }
 
         RowLayout {
             Kirigami.FormData.label: i18n("Days color:")
 
             Rectangle {
-                width: Kirigami.Units.gridUnit * 2
-                height: Kirigami.Units.gridUnit
+                Layout.preferredWidth: Kirigami.Units.gridUnit * 2
+                Layout.preferredHeight: Kirigami.Units.gridUnit
                 radius: Kirigami.Units.smallSpacing
                 color: colorField.text
                 border.width: 1
@@ -78,6 +102,37 @@ KCM.SimpleKCM {
                 placeholderText: "#ffffff"
                 onTextChanged: syncColorCombo()
             }
+        }
+    }
+
+    // The popups only read `value` when they are created, so make a new one
+    // each time, like Kirigami Addons' FormDateTimeDelegate does.
+    Component {
+        id: datePopupComponent
+
+        DateAndTime.DatePopup {
+            anchors.centerIn: parent
+            modal: true
+            onAccepted: {
+                const date = new Date(page.pickerDate.getTime())
+                date.setFullYear(value.getFullYear(), value.getMonth(), value.getDate())
+                page.cfg_eventDate = Countdown.toStorageString(date)
+            }
+            onClosed: destroy()
+        }
+    }
+
+    Component {
+        id: timePopupComponent
+
+        DateAndTime.TimePopup {
+            anchors.centerIn: parent
+            onAccepted: {
+                const date = new Date(page.pickerDate.getTime())
+                date.setHours(value.getHours(), value.getMinutes(), 0, 0)
+                page.cfg_eventDate = Countdown.toStorageString(date)
+            }
+            onClosed: destroy()
         }
     }
 }

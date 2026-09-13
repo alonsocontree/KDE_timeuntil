@@ -9,8 +9,8 @@
       <default></default>
     </entry>
     <entry name="eventDate" type="String">
-      <label>Event date (DD-MM-YYYY)</label>
-      <default>31-12-2026</default>
+      <label>Event date and time (yyyy-MM-ddTHH:mm, local time)</label>
+      <default></default>
     </entry>
     <entry name="daysColor" type="String">
       <label>Days text color</label>
