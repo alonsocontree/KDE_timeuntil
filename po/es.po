@@ -1,0 +1,147 @@
+# Spanish translation of KDE_timeuntil.
+# This file is distributed under the same license as the KDE_timeuntil package.
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: KDE_timeuntil\n"
+"Report-Msgid-Bugs-To: https://github.com/alonsocontree/KDE_timeuntil/issues\n"
+"POT-Creation-Date: 2026-09-12 22:06-0600\n"
+"PO-Revision-Date: 2026-09-12 21:00-0600\n"
+"Last-Translator: KDE_timeuntil contributors\n"
+"Language-Team: Spanish\n"
+"Language: es\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+
+#: plasma/contents/config/config.qml:5
+#, kde-format
+msgid "General"
+msgstr "General"
+
+#: plasma/contents/ui/configGeneral.qml:46
+#, kde-format
+msgid "Event name:"
+msgstr "Nombre del evento:"
+
+#: plasma/contents/ui/configGeneral.qml:47
+#, kde-format
+msgid "e.g. Vacation"
+msgstr "Ej.: Vacaciones"
+
+#: plasma/contents/ui/configGeneral.qml:51
+#, kde-format
+msgid "Date and time:"
+msgstr "Fecha y hora:"
+
+#: plasma/contents/ui/configGeneral.qml:57
+#, kde-format
+msgid "Pick a date…"
+msgstr "Elegir fecha…"
+
+#: plasma/contents/ui/configGeneral.qml:74
+#, kde-format
+msgid "Days color:"
+msgstr "Color de los días:"
+
+#: plasma/contents/ui/configGeneral.qml:88
+#, kde-format
+msgid "White"
+msgstr "Blanco"
+
+#: plasma/contents/ui/configGeneral.qml:89
+#, kde-format
+msgid "Black"
+msgstr "Negro"
+
+#: plasma/contents/ui/configGeneral.qml:90
+#, kde-format
+msgid "Red"
+msgstr "Rojo"
+
+#: plasma/contents/ui/configGeneral.qml:91
+#, kde-format
+msgid "Orange"
+msgstr "Naranja"
+
+#: plasma/contents/ui/configGeneral.qml:92
+#, kde-format
+msgid "Green"
+msgstr "Verde"
+
+#: plasma/contents/ui/configGeneral.qml:93
+#, kde-format
+msgid "Blue"
+msgstr "Azul"
+
+#: plasma/contents/ui/configGeneral.qml:94
+#, kde-format
+msgid "Yellow"
+msgstr "Amarillo"
+
+#: plasma/contents/ui/CountdownView.qml:27
+#, kde-format
+msgid "Pick a date in the settings"
+msgstr "Elige una fecha en la configuración"
+
+#: plasma/contents/ui/CountdownView.qml:31
+#, kde-format
+msgid "%1 day"
+msgid_plural "%1 days"
+msgstr[0] "%1 día"
+msgstr[1] "%1 días"
+
+#: plasma/contents/ui/CountdownView.qml:34
+#, kde-format
+msgid "%1 min"
+msgstr "%1 min"
+
+#: plasma/contents/ui/CountdownView.qml:37
+#, kde-format
+msgid "%1 h"
+msgstr "%1 h"
+
+#: plasma/contents/ui/CountdownView.qml:39
+#, kde-format
+msgid "%1 h %2 min"
+msgstr "%1 h %2 min"
+
+#: plasma/contents/ui/CountdownView.qml:41
+#, kde-format
+msgid "Now!"
+msgstr "¡Ahora!"
+
+#: plasma/contents/ui/CountdownView.qml:43
+#, kde-format
+msgid "Today!"
+msgstr "¡Hoy!"
+
+#: plasma/contents/ui/CountdownView.qml:45
+#, kde-format
+msgid "%1 day ago"
+msgid_plural "%1 days ago"
+msgstr[0] "Hace %1 día"
+msgstr[1] "Hace %1 días"
+
+#: plasma/contents/ui/CountdownView.qml:76
+#, kde-format
+msgctxt "@info date format, see QDate::toString"
+msgid "d MMM yyyy"
+msgstr "d MMM yyyy"
+
+#: plasma/contents/ui/CountdownView.qml:75
+#, kde-format
+msgctxt "@info event date and time"
+msgid "%1 · %2"
+msgstr "%1 · %2"
+
+#: plasma/contents/ui/main.qml:12
+#, kde-format
+msgid "My event"
+msgstr "Mi evento"
+
+#: plasma/contents/ui/main.qml:76
+#, kde-format
+msgid "The event started at %1."
+msgstr "El evento comenzó a las %1."
