@@ -27,8 +27,18 @@ target_include_directories(TimeUntil PRIVATE src)
 # Shared files keep the relative paths they have in the plasmoid, so
 # CountdownView.qml still finds ../code/countdown.mjs. The app's own QML
 # files sit at the module root.
-set_source_files_properties("${SHARED_DIR}/ui/CountdownView.qml" PROPERTIES QT_RESOURCE_ALIAS ui/CountdownView.qml)
-set_source_files_properties("${SHARED_DIR}/code/countdown.mjs" PROPERTIES QT_RESOURCE_ALIAS code/countdown.mjs)
+#
+# The shared files are not precompiled: Qt 6.8 names the cache file after the
+# path relative to this directory, and the "../" in it makes MSBuild fail.
+# They are small, so compiling them at startup is not noticeable.
+set_source_files_properties("${SHARED_DIR}/ui/CountdownView.qml" PROPERTIES
+    QT_RESOURCE_ALIAS ui/CountdownView.qml
+    QT_QML_SKIP_CACHEGEN TRUE
+)
+set_source_files_properties("${SHARED_DIR}/code/countdown.mjs" PROPERTIES
+    QT_RESOURCE_ALIAS code/countdown.mjs
+    QT_QML_SKIP_CACHEGEN TRUE
+)
 set(APP_QML_FILES
     qml/Main.qml
     qml/CountdownWindow.qml
