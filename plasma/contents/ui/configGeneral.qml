@@ -18,6 +18,9 @@ KCM.SimpleKCM {
     property string cfg_eventNameDefault
     property string cfg_eventDateDefault
     property string cfg_daysColorDefault
+    // Written by the widget itself; declared so the dialog does not warn.
+    property string cfg_notifiedEventDate
+    property string cfg_notifiedEventDateDefault
 
     readonly property var configuredDate: Countdown.parseEventDateTime(cfg_eventDate)
     // Where the pickers start: the configured date, or today at midnight.

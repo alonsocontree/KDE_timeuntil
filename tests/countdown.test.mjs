@@ -6,6 +6,7 @@ import {
     computeCountdown,
     msUntilNextMinute,
     parseEventDateTime,
+    shouldNotify,
     toStorageString,
 } from "../plasma/contents/code/countdown.mjs";
 
@@ -87,6 +88,25 @@ test("keeps events saved before 1.1 working", () => {
     assert.deepEqual(computeCountdown(at("2026-11-04T10:00"), at("05-11-2026")),
         { kind: "hours", days: 0, hours: 14, minutes: 0 });
     assert.equal(computeCountdown(at("2026-11-05T09:00"), at("05-11-2026")).kind, "today");
+});
+
+test("notifies when the event starts", () => {
+    const event = at("2026-09-30T18:00");
+    assert.equal(shouldNotify(at("2026-09-30T17:59"), event, false, true), false);
+    assert.equal(shouldNotify(new Date(2026, 8, 30, 18, 0, 0, 50), event, false, false), true);
+    assert.equal(shouldNotify(new Date(2026, 8, 30, 18, 0, 59), event, false, false), true);
+});
+
+test("notifies late only when allowed and within a day", () => {
+    const event = at("2026-09-30T18:00");
+    assert.equal(shouldNotify(at("2026-09-30T20:00"), event, false, true), true);
+    assert.equal(shouldNotify(at("2026-09-30T20:00"), event, false, false), false);
+    assert.equal(shouldNotify(at("2026-10-01T18:00"), event, false, true), false);
+});
+
+test("never notifies twice or without a date", () => {
+    assert.equal(shouldNotify(at("2026-09-30T18:00"), at("2026-09-30T18:00"), true, true), false);
+    assert.equal(shouldNotify(at("2026-09-30T18:00"), null, false, true), false);
 });
 
 test("waits until the next minute starts", () => {

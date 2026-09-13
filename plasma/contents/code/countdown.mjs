@@ -108,6 +108,18 @@ export function computeCountdown(now, target) {
     return { kind: "daysAgo", days: daysAgo, hours: 0, minutes: 0 };
 }
 
+// Whether to notify that the event started. `alreadyNotified` tells if this
+// date was notified before. An event starting this minute is always notified;
+// with allowLate, one that started less than a day ago is too (for example,
+// the computer was off or asleep at the time).
+export function shouldNotify(now, target, alreadyNotified, allowLate) {
+    if (!target || alreadyNotified) {
+        return false;
+    }
+    const late = now.getTime() - target.getTime();
+    return late >= 0 && (late < MS_PER_MINUTE || (allowLate && late < MS_PER_DAY));
+}
+
 // Milliseconds until the next minute starts, plus a small margin so a timer
 // never fires just before the boundary.
 export function msUntilNextMinute(now) {

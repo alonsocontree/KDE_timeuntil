@@ -16,5 +16,9 @@
       <label>Days text color</label>
       <default>#ffffff</default>
     </entry>
+    <entry name="notifiedEventDate" type="String">
+      <label>Event date that was already notified, so the notification is not repeated</label>
+      <default></default>
+    </entry>
   </group>
 </kcfg>
