@@ -17,6 +17,7 @@ Window {
     required property int posX
     required property int posY
     required property bool locked
+    required property string notifiedDate
 
     property var now: new Date()
     property bool canRemove: true

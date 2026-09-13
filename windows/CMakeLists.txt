@@ -14,6 +14,7 @@ set(PO_DIR "${CMAKE_CURRENT_SOURCE_DIR}/../po")
 
 qt_add_executable(TimeUntil WIN32
     src/main.cpp
+    src/autostart.cpp src/autostart.h
     src/eventstore.cpp src/eventstore.h
     src/localizedcontext.cpp src/localizedcontext.h
 )
@@ -55,6 +56,19 @@ qt_add_resources(TimeUntil translations
     BASE "${PO_DIR}"
     FILES ${PO_FILES}
 )
+
+qt_add_resources(TimeUntil icons
+    PREFIX /icons
+    BASE resources
+    FILES resources/timeuntil.png
+)
+
+if(WIN32)
+    # Icon and version details of TimeUntil.exe.
+    configure_file(resources/timeuntil.ico "${CMAKE_CURRENT_BINARY_DIR}/timeuntil.ico" COPYONLY)
+    configure_file(resources/timeuntil.rc.in "${CMAKE_CURRENT_BINARY_DIR}/timeuntil.rc" @ONLY)
+    target_sources(TimeUntil PRIVATE "${CMAKE_CURRENT_BINARY_DIR}/timeuntil.rc")
+endif()
 
 target_link_libraries(TimeUntil PRIVATE Qt6::Quick Qt6::QuickControls2 Qt6::Widgets)
 
