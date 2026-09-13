@@ -9,7 +9,7 @@
     "Description": "Shows the time left until an event",
     "Description[es]": "Muestra el tiempo que falta para un evento",
     "Icon": "view-calendar",
-    "Version": "1.0.0",
+    "Version": "1.1.0",
     "License": "GPL-3.0-or-later",
     "Category": "Utilities",
     "EnabledByDefault": true,
