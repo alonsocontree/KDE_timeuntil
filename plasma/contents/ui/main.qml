@@ -12,7 +12,12 @@ PlasmoidItem {
     readonly property string eventDate: (Plasmoid.configuration.eventDate || "").trim() || "31-12-2026"
     readonly property color daysColor: (Plasmoid.configuration.daysColor || "#ffffff")
     readonly property bool validDate: isValidDateString(eventDate)
-    readonly property int daysRemaining: calculateDaysRemaining(eventDate)
+    readonly property int daysRemaining: calculateDaysRemaining(eventDate, now)
+
+    // Bindings do not notice the clock moving, so `now` is refreshed at the
+    // start of every minute. Before, the count kept the value computed when
+    // plasmashell started and was wrong after midnight or a suspend.
+    property var now: new Date()
 
     preferredRepresentation: fullRepresentation
     Plasmoid.backgroundHints: PlasmaCore.Types.NoBackground
@@ -48,7 +53,7 @@ PlasmoidItem {
             && parsed.getUTCDate() === day
     }
 
-    function calculateDaysRemaining(dateString) {
+    function calculateDaysRemaining(dateString, now) {
         if (!isValidDateString(dateString)) {
             return 0
         }
@@ -69,12 +74,25 @@ PlasmoidItem {
             day = Number(parts[2])
         }
 
-        const now = new Date()
         const todayUtc = Date.UTC(now.getFullYear(), now.getMonth(), now.getDate())
         const targetUtc = Date.UTC(year, month - 1, day)
         const msPerDay = 24 * 60 * 60 * 1000
 
         return Math.floor((targetUtc - todayUtc) / msPerDay)
+    }
+
+    function msUntilNextMinute(date) {
+        return 60000 - (date.getSeconds() * 1000 + date.getMilliseconds()) + 50
+    }
+
+    Timer {
+        running: true
+        interval: root.msUntilNextMinute(new Date())
+        onTriggered: {
+            root.now = new Date()
+            interval = root.msUntilNextMinute(root.now)
+            start()
+        }
     }
 
     function daysLabel() {
