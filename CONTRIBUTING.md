@@ -30,7 +30,7 @@ An English translation file is included so contributors can help improve wording
 1. Check that the issue is reproducible.
 2. Keep the patch as small as possible.
 3. Test locally with:
-   - `kpackagetool6 --type Plasma/Applet --upgrade .`
+   - `kpackagetool6 --type Plasma/Applet --upgrade plasma/`
    - `kquitapp6 plasmashell`
    - `plasmashell --replace >/dev/null 2>&1 & disown`
 4. Confirm the widget still:

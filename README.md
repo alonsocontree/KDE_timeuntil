@@ -18,10 +18,10 @@ KDE_timeuntil is a simple Plasma 6 widget (plasmoid) that shows how many days ar
 
 ## Project Structure
 
-- metadata.json: plasmoid metadata.
-- contents/ui/main.qml: main widget UI and day-difference logic.
-- contents/ui/configGeneral.qml: settings UI.
-- contents/config/main.xml: configuration schema.
+- plasma/metadata.json: plasmoid metadata.
+- plasma/contents/ui/main.qml: main widget UI and day-difference logic.
+- plasma/contents/ui/configGeneral.qml: settings UI.
+- plasma/contents/config/main.xml: configuration schema.
 - po/en.po: English translation file.
 
 ## Install for Local Testing
@@ -29,7 +29,7 @@ KDE_timeuntil is a simple Plasma 6 widget (plasmoid) that shows how many days ar
 1. Open a terminal in the project root.
 2. Install or upgrade the plasmoid:
 
-   `kpackagetool6 --type Plasma/Applet --upgrade .
+   `kpackagetool6 --type Plasma/Applet --upgrade plasma/`
 
 3. Restart Plasma Shell:
 
