@@ -82,7 +82,7 @@ node --test 'tests/*.test.mjs'
 
 ### Windows app
 
-Needs Qt 6.8 or later (CI uses 6.11) and CMake. It also builds and runs on
+Needs Qt 6.8 or later (CI uses 6.8 LTS) and CMake. It also builds and runs on
 Linux for development; keeping windows visible on Win+D and starting with
 Windows only work on Windows.
 

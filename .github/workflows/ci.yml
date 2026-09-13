@@ -55,7 +55,10 @@ jobs:
       - uses: actions/checkout@v4
       - uses: jurplel/install-qt-action@v4
         with:
-          version: "6.11.*"
+          # aqtinstall 3.3 cannot read the repository layout that Qt 6.11
+          # introduced (miurahr/aqtinstall#959). Move to 6.11 once a newer
+          # aqtinstall is released.
+          version: "6.8.3"
           arch: win64_msvc2022_64
           cache: true
       # Sets VCToolsRedistDir, used to ship the C++ runtime next to the app.
