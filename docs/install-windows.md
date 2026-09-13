@@ -24,7 +24,6 @@ Right-click `TimeUntil-windows-installer.zip` and choose **Extract All…**.
 
 Keep the suggested folder, or choose another one, and click **Extract**.
 
-![Choosing where to extract the files](../img/Timeuntil/02-extract-destination.png)
 
 ## 3. Run the installer
 
@@ -94,8 +93,6 @@ In the settings dialog:
 
 Choose **New countdown** in the right-click menu or in the notification area
 icon.
-
-![New countdown in the right-click menu](../img/Timeuntil/12-new-countdown-menu.png)
 
 A new countdown appears and its settings open, so you can set it up right away.
 
