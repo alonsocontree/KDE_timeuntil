@@ -24,8 +24,8 @@ jobs:
       matrix:
         tz: [UTC, America/Mexico_City, America/New_York, Europe/Madrid, Australia/Sydney]
     steps:
-      - uses: actions/checkout@v4
-      - uses: actions/setup-node@v4
+      - uses: actions/checkout@v5
+      - uses: actions/setup-node@v5
         with:
           node-version: 22
       - run: node --test 'tests/*.test.mjs'
@@ -36,14 +36,14 @@ jobs:
     name: Plasma widget package
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v5
       - name: Install gettext
         run: sudo apt-get update && sudo apt-get install --yes gettext zip
       - name: Check that the translations compile
         run: scripts/build-translations.sh
       - name: Package
         run: scripts/package-plasmoid.sh
-      - uses: actions/upload-artifact@v4
+      - uses: actions/upload-artifact@v6
         with:
           name: plasmoid
           path: dist/*.plasmoid
@@ -52,7 +52,7 @@ jobs:
     name: Windows app
     runs-on: windows-latest
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v5
       - uses: jurplel/install-qt-action@v4
         with:
           # aqtinstall 3.3 cannot read the repository layout that Qt 6.11
@@ -61,12 +61,18 @@ jobs:
           version: "6.8.3"
           arch: win64_msvc2022_64
           cache: true
-      # Sets VCToolsRedistDir, used to ship the C++ runtime next to the app.
-      - uses: ilammy/msvc-dev-cmd@v1
       - name: Build
+        shell: pwsh
         run: |
           cmake -S windows -B build
-          cmake --build build --config Release
+          if ($LASTEXITCODE) { exit $LASTEXITCODE }
+          cmake --build build --config Release 2>&1 | Tee-Object -Variable output
+          if ($LASTEXITCODE) {
+            # Repeat the errors as annotations so they show in the run summary.
+            $output | Select-String -Pattern 'error [A-Z]+[0-9]+|CMake Error|: error:' |
+              Select-Object -First 20 | ForEach-Object { Write-Output "::error::$($_.Line.Trim())" }
+            exit 1
+          }
       - name: Deploy
         shell: pwsh
         run: |
@@ -75,10 +81,14 @@ jobs:
           Copy-Item build/Release/TimeUntil.exe $dist
           windeployqt --release --no-translations --no-opengl-sw --no-compiler-runtime `
             --qmldir windows/qml --qmldir plasma/contents/ui "$dist/TimeUntil.exe"
-          Copy-Item "$env:VCToolsRedistDir/x64/Microsoft.VC*.CRT/*.dll" $dist
+          if ($LASTEXITCODE) { exit $LASTEXITCODE }
+          # Ship the C++ runtime next to the app, so no separate installer is needed.
+          $vs = & "${env:ProgramFiles(x86)}/Microsoft Visual Studio/Installer/vswhere.exe" -latest -property installationPath
+          $redist = (Get-Content "$vs/VC/Auxiliary/Build/Microsoft.VCRedistVersion.default.txt").Trim()
+          Copy-Item "$vs/VC/Redist/MSVC/$redist/x64/Microsoft.VC*.CRT/*.dll" $dist
           Copy-Item LICENSE "$dist/LICENSE.txt"
           Copy-Item windows/installer/THIRD-PARTY-NOTICES.txt $dist
-      - uses: actions/upload-artifact@v4
+      - uses: actions/upload-artifact@v6
         with:
           name: TimeUntil-windows
           path: dist/TimeUntil
@@ -93,7 +103,7 @@ jobs:
             $iscc = Get-ChildItem $paths | Select-Object -First 1
           }
           & $iscc.FullName "/DAppVersion=$version" windows/installer/timeuntil.iss
-      - uses: actions/upload-artifact@v4
+      - uses: actions/upload-artifact@v6
         with:
           name: TimeUntil-windows-installer
           path: dist/TimeUntil-*-setup.exe
@@ -106,12 +116,12 @@ jobs:
     permissions:
       contents: write
     steps:
-      - uses: actions/download-artifact@v4
+      - uses: actions/download-artifact@v7
         with:
           path: artifacts
       - name: Zip the portable Windows app
         run: cd artifacts && zip -qr "TimeUntil-${GITHUB_REF_NAME#v}-windows.zip" TimeUntil-windows
-      - uses: softprops/action-gh-release@v2
+      - uses: softprops/action-gh-release@v3
         with:
           files: |
             artifacts/plasmoid/*.plasmoid
