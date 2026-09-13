@@ -1,0 +1,74 @@
+name: CI
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  tests:
+    name: Countdown logic (${{ matrix.tz }})
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        tz: [UTC, America/Mexico_City, America/New_York, Europe/Madrid, Australia/Sydney]
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+      - run: node --test 'tests/*.test.mjs'
+        env:
+          TZ: ${{ matrix.tz }}
+
+  plasmoid:
+    name: Plasma widget package
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Install gettext
+        run: sudo apt-get update && sudo apt-get install --yes gettext zip
+      - name: Check that the translations compile
+        run: scripts/build-translations.sh
+      - name: Package
+        run: scripts/package-plasmoid.sh
+      - uses: actions/upload-artifact@v4
+        with:
+          name: plasmoid
+          path: dist/*.plasmoid
+
+  windows:
+    name: Windows app
+    runs-on: windows-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: jurplel/install-qt-action@v4
+        with:
+          version: "6.11.*"
+          arch: win64_msvc2022_64
+          cache: true
+      # Sets VCToolsRedistDir, used to ship the C++ runtime next to the app.
+      - uses: ilammy/msvc-dev-cmd@v1
+      - name: Build
+        run: |
+          cmake -S windows -B build
+          cmake --build build --config Release
+      - name: Deploy
+        shell: pwsh
+        run: |
+          $dist = "dist/TimeUntil"
+          New-Item -ItemType Directory -Force $dist | Out-Null
+          Copy-Item build/Release/TimeUntil.exe $dist
+          windeployqt --release --no-translations --no-opengl-sw --no-compiler-runtime `
+            --qmldir windows/qml --qmldir plasma/contents/ui "$dist/TimeUntil.exe"
+          Copy-Item "$env:VCToolsRedistDir/x64/Microsoft.VC*.CRT/*.dll" $dist
+          Copy-Item LICENSE "$dist/LICENSE.txt"
+          Copy-Item windows/installer/THIRD-PARTY-NOTICES.txt $dist
+      - uses: actions/upload-artifact@v4
+        with:
+          name: TimeUntil-windows
+          path: dist/TimeUntil
