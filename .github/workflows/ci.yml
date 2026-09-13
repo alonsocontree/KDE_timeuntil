@@ -2,10 +2,16 @@ name: CI
 
 on:
   push:
-    branches: [main]
+    branches: ["**"]
     tags: ["v*"]
   pull_request:
   workflow_dispatch:
+
+# A pull request from a branch of this repository shares the group of the
+# branch push, so only one of the two runs is kept.
+concurrency:
+  group: ${{ github.workflow }}-${{ github.head_ref || github.ref_name }}
+  cancel-in-progress: true
 
 permissions:
   contents: read
