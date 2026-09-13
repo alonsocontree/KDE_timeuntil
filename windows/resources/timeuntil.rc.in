@@ -14,7 +14,8 @@ BEGIN
         BEGIN
             VALUE "FileDescription", "TimeUntil"
             VALUE "FileVersion", "@PROJECT_VERSION@"
-            VALUE "LegalCopyright", "GPL-3.0-or-later"
+            VALUE "CompanyName", "Alonso Contreras"
+            VALUE "LegalCopyright", "Copyright (C) 2026 Alonso Contreras. GPL-3.0-or-later"
             VALUE "OriginalFilename", "TimeUntil.exe"
             VALUE "ProductName", "TimeUntil"
             VALUE "ProductVersion", "@PROJECT_VERSION@"

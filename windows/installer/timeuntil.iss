@@ -11,7 +11,7 @@
 AppId={{6F1D7C2B-3C8E-4D6A-9E2F-7B5A1C0D4E91}
 AppName=TimeUntil
 AppVersion={#AppVersion}
-AppPublisher=KDE_timeuntil contributors
+AppPublisher=Alonso Contreras
 AppPublisherURL=https://github.com/alonsocontree/KDE_timeuntil
 DefaultDirName={autopf}\TimeUntil
 DisableProgramGroupPage=yes
