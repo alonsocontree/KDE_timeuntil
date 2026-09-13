@@ -36,6 +36,9 @@ Window {
     x: posX >= 0 ? posX : 80 + index * 40
     y: posY >= 0 ? posY : 80 + index * 40
 
+    // Stay visible when the user shows the desktop (Windows only).
+    Component.onCompleted: DesktopPinner.pin(window)
+
     CountdownView {
         id: view
 

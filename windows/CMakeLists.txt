@@ -15,6 +15,7 @@ set(PO_DIR "${CMAKE_CURRENT_SOURCE_DIR}/../po")
 qt_add_executable(TimeUntil WIN32
     src/main.cpp
     src/autostart.cpp src/autostart.h
+    src/desktoppinner.cpp src/desktoppinner.h
     src/eventstore.cpp src/eventstore.h
     src/localizedcontext.cpp src/localizedcontext.h
 )
@@ -68,6 +69,8 @@ if(WIN32)
     configure_file(resources/timeuntil.ico "${CMAKE_CURRENT_BINARY_DIR}/timeuntil.ico" COPYONLY)
     configure_file(resources/timeuntil.rc.in "${CMAKE_CURRENT_BINARY_DIR}/timeuntil.rc" @ONLY)
     target_sources(TimeUntil PRIVATE "${CMAKE_CURRENT_BINARY_DIR}/timeuntil.rc")
+    # DesktopPinner uses the DWM API.
+    target_link_libraries(TimeUntil PRIVATE dwmapi)
 endif()
 
 target_link_libraries(TimeUntil PRIVATE Qt6::Quick Qt6::QuickControls2 Qt6::Widgets)
