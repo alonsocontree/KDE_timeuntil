@@ -21,6 +21,9 @@ Window {
     property var now: new Date()
     property bool canRemove: true
 
+    signal editRequested()
+    signal newRequested()
+
     title: eventName
     flags: Qt.FramelessWindowHint | Qt.Tool | Qt.WindowStaysOnBottomHint
     color: "transparent"
@@ -84,8 +87,12 @@ Window {
         popupType: Popup.Native
 
         MenuItem {
+            text: i18n("Edit…")
+            onTriggered: window.editRequested()
+        }
+        MenuItem {
             text: i18n("New countdown")
-            onTriggered: EventStore.addEvent()
+            onTriggered: window.newRequested()
         }
         MenuItem {
             text: i18n("Lock position")

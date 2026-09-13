@@ -10,6 +10,27 @@ QtObject {
 
     property var now: new Date()
 
+    function openSettings(window) {
+        settingsComponent.createObject(app, {
+            eventId: window.eventId,
+            eventName: window.eventName,
+            eventDate: window.eventDate,
+            textColor: window.textColor
+        })
+    }
+
+    function addCountdown() {
+        EventStore.addEvent()
+        const window = windows.objectAt(windows.count - 1)
+        if (window) {
+            openSettings(window)
+        }
+    }
+
+    property Component settingsComponent: Component {
+        SettingsDialog {}
+    }
+
     // Refresh `now` at the start of every minute, like the Plasma widget.
     property Timer clock: Timer {
         running: true
@@ -26,8 +47,12 @@ QtObject {
         model: EventStore
 
         delegate: CountdownWindow {
+            id: countdownWindow
+
             now: app.now
             canRemove: EventStore.count > 1
+            onEditRequested: app.openSettings(countdownWindow)
+            onNewRequested: app.addCountdown()
         }
     }
 }

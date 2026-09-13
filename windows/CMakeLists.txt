@@ -30,6 +30,8 @@ set_source_files_properties("${SHARED_DIR}/code/countdown.mjs" PROPERTIES QT_RES
 set(APP_QML_FILES
     qml/Main.qml
     qml/CountdownWindow.qml
+    qml/DateTimePicker.qml
+    qml/SettingsDialog.qml
 )
 foreach(file IN LISTS APP_QML_FILES)
     get_filename_component(name "${file}" NAME)
