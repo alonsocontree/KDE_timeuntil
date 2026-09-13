@@ -37,8 +37,9 @@ For now, the Windows app only supports languages whose plural rule is
      save, and the countdown updates.
    - `journalctl --user -b | grep kde_timeuntil` should show no QML errors.
 3. For the Windows app, build it (see the README) and check the countdown
-   windows, the settings dialog and the tray menu. Keeping windows visible
-   on Win+D can only be tested on Windows.
+   windows, locking and unlocking their position, the settings dialog and the
+   tray menu. Keeping windows visible on Win+D and starting with Windows can
+   only be tested on Windows; CI builds an installer for every push.
 4. Write commit messages following Conventional Commits, such as
    `feat(plasma): ...` or `fix(windows): ...`.
 
@@ -47,6 +48,7 @@ For now, the Windows app only supports languages whose plural rule is
 - Use a clear title and a short description of the problem being fixed.
 - Include before and after screenshots for UI changes.
 - Keep unrelated changes out of the same pull request.
+- Add user-visible changes to `CHANGELOG.md`.
 
 ## Reporting Issues
 

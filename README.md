@@ -1,7 +1,7 @@
 # KDE_timeuntil
 
 A countdown to an event, as a KDE Plasma 6 desktop widget and as a small
-Windows app (TimeUntil).
+Windows app (TimeUntil). By Alonso Contreras.
 
 ![Widget](img/screenshot_widget.png)
 
@@ -14,6 +14,8 @@ Windows app (TimeUntil).
 - A notification when the event starts.
 - Transparent background and a configurable text color.
 - English and Spanish.
+
+See [CHANGELOG.md](CHANGELOG.md) for what changed in each version.
 
 ## Plasma widget
 
@@ -36,6 +38,8 @@ kpackagetool6 --type Plasma/Applet --upgrade plasma/
 systemctl --user restart plasma-plasmashell
 ```
 
+Plasma keeps using the old files until plasmashell restarts.
+
 To try it in a window without touching the desktop:
 
 ```sh
@@ -49,16 +53,35 @@ count down to midnight; open the settings to add one.
 
 ## Windows app
 
-Works on Windows 10 and 11. Download `TimeUntil-<version>-setup.exe` or the
-portable zip from the releases page. Builds of every commit are available as
-GitHub Actions artifacts.
+Works on Windows 10 and 11.
+
+### Download
+
+- **Releases:** `TimeUntil-<version>-setup.exe` (installer) or
+  `TimeUntil-<version>-windows.zip` (portable).
+- **Latest build:** every push builds the app. Open the run on the
+  [Actions page](https://github.com/alonsocontree/KDE_timeuntil/actions) and
+  download `TimeUntil-windows-installer` or `TimeUntil-windows` from its
+  *Artifacts* section (you need to be signed in to GitHub).
+
+The installer is not signed, so Windows SmartScreen warns about it. Choose
+*More info → Run anyway*. It installs for the current user and does not need
+administrator rights.
+
+### Use
 
 - Each countdown is a window on the desktop. Drag it to move it.
-- Right-click a countdown for *Edit…*, *New countdown*, *Lock position*,
-  *Remove* and *Quit*.
+- Right-click a countdown for *Edit…*, *New countdown*, *Lock position* (or
+  *Unlock position* once locked), *Remove* and *Quit*.
 - The notification area icon offers *New countdown*, *Start with Windows* and
-  *Quit*.
+  *Quit*. Windows 11 may hide new icons under the `^` arrow on the taskbar.
 - Countdowns stay visible when you show the desktop (Win+D).
+
+### Start with Windows
+
+Either check *Automatically start TimeUntil* during installation, or turn on
+*Start with Windows* in the notification area menu. Both use the same entry,
+and uninstalling removes it.
 
 Settings are stored under `HKEY_CURRENT_USER\Software\TimeUntil`.
 
@@ -82,15 +105,25 @@ node --test 'tests/*.test.mjs'
 
 ### Windows app
 
-Needs Qt 6.8 or later (CI uses 6.8 LTS) and CMake. It also builds and runs on
-Linux for development; keeping windows visible on Win+D and starting with
-Windows only work on Windows.
+Needs Qt 6.8 or later and CMake. It also builds and runs on Linux for
+development; keeping windows visible on Win+D and starting with Windows only
+work on Windows.
 
 ```sh
 cmake -S windows -B build/windows
 cmake --build build/windows
 ./build/windows/TimeUntil
 ```
+
+### Continuous integration
+
+`.github/workflows/ci.yml` runs on every push and pull request. It tests
+`countdown.mjs` in several time zones, packages the `.plasmoid`, and builds the
+Windows app, its portable folder and its installer.
+
+CI builds the Windows app with Qt 6.8.3 LTS, because the released aqtinstall
+cannot install Qt 6.11 yet
+([miurahr/aqtinstall#959](https://github.com/miurahr/aqtinstall/issues/959)).
 
 ### Translations
 
@@ -106,10 +139,14 @@ or `LANGUAGE=es ./build/windows/TimeUntil`.
 
 ### Releases
 
-Pushing a tag such as `v1.1.0` makes CI publish the `.plasmoid`, the Windows
-installer and a portable zip as a GitHub release.
+1. Update the version in `plasma/metadata.json` and `windows/CMakeLists.txt`,
+   and add the release to `CHANGELOG.md`.
+2. Push a tag such as `v1.1.0`. CI publishes the `.plasmoid`, the Windows
+   installer and a portable zip as a GitHub release.
 
 ## License
+
+Copyright (C) 2026 Alonso Contreras.
 
 GPL-3.0-or-later. The Windows app includes Qt under the LGPLv3; see
 `windows/installer/THIRD-PARTY-NOTICES.txt`.
