@@ -21,6 +21,9 @@ Window {
 
     property var now: new Date()
     property bool canRemove: true
+    // Starts from the stored value and then follows the menu directly, so the
+    // lock never depends on the model reporting the change back.
+    property bool positionLocked: locked
 
     signal editRequested()
     signal newRequested()
@@ -65,7 +68,7 @@ Window {
         anchors.fill: parent
         acceptedButtons: Qt.LeftButton | Qt.RightButton
         onPressed: mouse => {
-            if (mouse.button === Qt.LeftButton && !window.locked) {
+            if (mouse.button === Qt.LeftButton && !window.positionLocked) {
                 window.startSystemMove()
             }
         }
@@ -98,11 +101,14 @@ Window {
             text: i18n("New countdown")
             onTriggered: window.newRequested()
         }
+        // A plain item that says what it will do. Its checkable version
+        // could be checked but not unchecked again on Windows.
         MenuItem {
-            text: i18n("Lock position")
-            checkable: true
-            checked: window.locked
-            onTriggered: EventStore.updateEvent(window.eventId, { locked: checked })
+            text: window.positionLocked ? i18n("Unlock position") : i18n("Lock position")
+            onTriggered: {
+                window.positionLocked = !window.positionLocked
+                EventStore.updateEvent(window.eventId, { locked: window.positionLocked })
+            }
         }
         MenuItem {
             text: i18n("Remove")

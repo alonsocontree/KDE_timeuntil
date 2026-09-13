@@ -5,7 +5,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: KDE_timeuntil\n"
 "Report-Msgid-Bugs-To: https://github.com/alonsocontree/KDE_timeuntil/issues\n"
-"POT-Creation-Date: 2026-09-12 22:23-0600\n"
+"POT-Creation-Date: 2026-09-12 23:08-0600\n"
 "PO-Revision-Date: 2026-09-12 21:00-0600\n"
 "Last-Translator: KDE_timeuntil contributors\n"
 "Language-Team: Spanish\n"
@@ -136,7 +136,7 @@ msgctxt "@info event date and time"
 msgid "%1 · %2"
 msgstr "%1 · %2"
 
-#: plasma/contents/ui/main.qml:12 windows/qml/CountdownWindow.qml:51
+#: plasma/contents/ui/main.qml:12 windows/qml/CountdownWindow.qml:54
 #: windows/qml/Main.qml:43
 #, kde-format
 msgid "My event"
@@ -147,27 +147,32 @@ msgstr "Mi evento"
 msgid "The event started at %1."
 msgstr "El evento comenzó a las %1."
 
-#: windows/qml/CountdownWindow.qml:94
+#: windows/qml/CountdownWindow.qml:97
 #, kde-format
 msgid "Edit…"
 msgstr "Editar…"
 
-#: windows/qml/CountdownWindow.qml:98 windows/qml/Main.qml:88
+#: windows/qml/CountdownWindow.qml:101 windows/qml/Main.qml:88
 #, kde-format
 msgid "New countdown"
 msgstr "Nueva cuenta regresiva"
 
-#: windows/qml/CountdownWindow.qml:102
+#: windows/qml/CountdownWindow.qml:107
+#, kde-format
+msgid "Unlock position"
+msgstr "Desbloquear posición"
+
+#: windows/qml/CountdownWindow.qml:107
 #, kde-format
 msgid "Lock position"
 msgstr "Bloquear posición"
 
-#: windows/qml/CountdownWindow.qml:108
+#: windows/qml/CountdownWindow.qml:114
 #, kde-format
 msgid "Remove"
 msgstr "Eliminar"
 
-#: windows/qml/CountdownWindow.qml:114 windows/qml/Main.qml:100
+#: windows/qml/CountdownWindow.qml:120 windows/qml/Main.qml:100
 #, kde-format
 msgid "Quit"
 msgstr "Salir"
