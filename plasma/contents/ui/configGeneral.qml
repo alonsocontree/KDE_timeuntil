@@ -33,18 +33,18 @@ KCM.SimpleKCM {
     Kirigami.FormLayout {
         TextField {
             id: eventNameField
-            Kirigami.FormData.label: i18n("Nombre del evento:")
-            placeholderText: i18n("Ej: Vacaciones")
+            Kirigami.FormData.label: i18n("Event name:")
+            placeholderText: i18n("e.g. Vacation")
         }
 
         TextField {
             id: eventDateField
-            Kirigami.FormData.label: i18n("Fecha (DD-MM-AAAA):")
+            Kirigami.FormData.label: i18n("Date (DD-MM-YYYY):")
             placeholderText: "31-12-2026"
         }
 
         RowLayout {
-            Kirigami.FormData.label: i18n("Color de dias:")
+            Kirigami.FormData.label: i18n("Days color:")
 
             Rectangle {
                 width: Kirigami.Units.gridUnit * 2
@@ -58,13 +58,13 @@ KCM.SimpleKCM {
             ComboBox {
                 id: colorCombo
                 model: [
-                    { text: i18n("Blanco"), value: "#ffffff" },
-                    { text: i18n("Negro"), value: "#000000" },
-                    { text: i18n("Rojo"), value: "#ff5555" },
-                    { text: i18n("Naranja"), value: "#ff9800" },
-                    { text: i18n("Verde"), value: "#4caf50" },
-                    { text: i18n("Azul"), value: "#42a5f5" },
-                    { text: i18n("Amarillo"), value: "#ffd54f" }
+                    { text: i18n("White"), value: "#ffffff" },
+                    { text: i18n("Black"), value: "#000000" },
+                    { text: i18n("Red"), value: "#ff5555" },
+                    { text: i18n("Orange"), value: "#ff9800" },
+                    { text: i18n("Green"), value: "#4caf50" },
+                    { text: i18n("Blue"), value: "#42a5f5" },
+                    { text: i18n("Yellow"), value: "#ffd54f" }
                 ]
                 textRole: "text"
                 onActivated: {

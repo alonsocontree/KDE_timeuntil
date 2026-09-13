@@ -8,7 +8,7 @@ import org.kde.plasma.core as PlasmaCore
 PlasmoidItem {
     id: root
 
-    readonly property string eventName: (Plasmoid.configuration.eventName || "").trim() || i18n("Mi evento")
+    readonly property string eventName: (Plasmoid.configuration.eventName || "").trim() || i18n("My event")
     readonly property string eventDate: (Plasmoid.configuration.eventDate || "").trim() || "31-12-2026"
     readonly property color daysColor: (Plasmoid.configuration.daysColor || "#ffffff")
     readonly property bool validDate: isValidDateString(eventDate)
@@ -79,18 +79,18 @@ PlasmoidItem {
 
     function daysLabel() {
         if (!validDate) {
-            return i18n("Fecha invalida")
+            return i18n("Invalid date")
         }
 
         if (daysRemaining === 0) {
-            return i18n("Hoy")
+            return i18n("Today")
         }
 
         if (daysRemaining > 0) {
-            return i18n("%1 dias", daysRemaining)
+            return i18n("%1 days", daysRemaining)
         }
 
-        return i18n("Hace %1 dias", Math.abs(daysRemaining))
+        return i18n("%1 days ago", Math.abs(daysRemaining))
     }
 
     fullRepresentation: Item {

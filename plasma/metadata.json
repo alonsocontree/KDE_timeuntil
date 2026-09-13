@@ -6,7 +6,7 @@
   "KPlugin": {
     "Id": "org.kde.kde_timeuntil",
     "Name": "KDE_timeuntil",
-    "Description": "Muestra los dias restantes hasta un evento",
+    "Description": "Shows the time left until an event",
     "Icon": "view-calendar",
     "Version": "1.0.0",
     "License": "GPL-3.0-or-later",

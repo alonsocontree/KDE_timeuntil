@@ -5,15 +5,15 @@
       http://www.kde.org/standards/kcfg/1.0/kcfg.xsd">
   <group name="General">
     <entry name="eventName" type="String">
-      <label>Nombre del evento</label>
-      <default>Mi evento</default>
+      <label>Event name</label>
+      <default></default>
     </entry>
     <entry name="eventDate" type="String">
-      <label>Fecha del evento (DD-MM-AAAA)</label>
+      <label>Event date (DD-MM-YYYY)</label>
       <default>31-12-2026</default>
     </entry>
     <entry name="daysColor" type="String">
-      <label>Color de los dias</label>
+      <label>Days text color</label>
       <default>#ffffff</default>
     </entry>
   </group>
