@@ -1,63 +1,115 @@
 # KDE_timeuntil
 
-KDE_timeuntil is a simple Plasma 6 widget (plasmoid) that shows how many days are left until an event.
+A countdown to an event, as a KDE Plasma 6 desktop widget and as a small
+Windows app (TimeUntil).
+
+![Widget](img/screenshot_widget.png)
 
 ## Features
 
-- Minimal UI: only days left plus event title.
-- Transparent widget background.
-- Manual date input in DD-MM-YYYY format.
-- Configurable text color for the days counter.
-- Persistent settings via Plasma configuration.
+- Days left until the event. On the last day it switches to hours and
+  minutes, then shows "Now!", "Today!" and "N days ago".
+- Date and time picked from a calendar and a time picker.
+- The event's date and time under its name, formatted for your language.
+- A notification when the event starts.
+- Transparent background and a configurable text color.
+- English and Spanish.
 
-## Requirements
+## Plasma widget
 
-- KDE Plasma 6
-- Qt 6
-- kpackagetool6
+Requires KDE Plasma 6. The settings page uses Kirigami Addons, which comes
+with Plasma.
 
-## Project Structure
+### Install
 
-- plasma/metadata.json: plasmoid metadata.
-- plasma/contents/ui/main.qml: main widget UI and day-difference logic.
-- plasma/contents/ui/configGeneral.qml: settings UI.
-- plasma/contents/config/main.xml: configuration schema.
-- po/en.po: English translation file.
+From a release, download `KDE_timeuntil-<version>.plasmoid` and either use
+*Add Widgets → Get New → Install Widget From Local File*, or run:
 
-## Install for Local Testing
+```sh
+kpackagetool6 --type Plasma/Applet --install KDE_timeuntil-<version>.plasmoid
+```
 
-1. Open a terminal in the project root.
-2. Install or upgrade the plasmoid:
+From this repository (use `--install` the first time):
 
-   `kpackagetool6 --type Plasma/Applet --upgrade plasma/`
+```sh
+kpackagetool6 --type Plasma/Applet --upgrade plasma/
+systemctl --user restart plasma-plasmashell
+```
 
-3. Restart Plasma Shell:
+To try it in a window without touching the desktop:
 
-   `kquitapp6 plasmashell`
-   `plasmashell --replace >/dev/null 2>&1 & disown`
+```sh
+plasmawindowed org.kde.kde_timeuntil
+```
 
-4. Optional standalone preview:
+### Upgrading from 1.0
 
-   `plasmawindowed org.kde.kde_timeuntil`
+Existing widgets keep their event. Dates saved by 1.0 have no time, so they
+count down to midnight; open the settings to add one.
 
-## Usage
+## Windows app
 
-1. Add the widget to your desktop or panel.
-2. Open widget settings.
-3. Set:
-   - Event name
-   - Event date in DD-MM-YYYY format
-   - Days text color
+Works on Windows 10 and 11. Download `TimeUntil-<version>-setup.exe` or the
+portable zip from the releases page. Builds of every commit are available as
+GitHub Actions artifacts.
 
-![settings](img/screenshot_settings.png)
+- Each countdown is a window on the desktop. Drag it to move it.
+- Right-click a countdown for *Edit…*, *New countdown*, *Lock position*,
+  *Remove* and *Quit*.
+- The notification area icon offers *New countdown*, *Start with Windows* and
+  *Quit*.
+- Countdowns stay visible when you show the desktop (Win+D).
 
-4. Apply settings.
+Settings are stored under `HKEY_CURRENT_USER\Software\TimeUntil`.
 
-## Result
+## Development
 
-![result](img/screenshot_widget.png)
+### Layout
 
-## Notes
+- `plasma/`: the Plasma widget package (`metadata.json`, `contents/`).
+  - `contents/code/countdown.mjs`: countdown logic, shared with the Windows app.
+  - `contents/ui/CountdownView.qml`: countdown text, shared with the Windows app.
+- `windows/`: the Qt 6 app. Its CMake project compiles the shared files in.
+- `po/`: translations used by both versions.
+- `tests/`: unit tests for `countdown.mjs`.
+- `scripts/`: translation, icon and packaging helpers.
 
-- If the date format is invalid, the widget shows an invalid-date message.
-- You may see unrelated warnings from other local plasmoids while running kpackagetool6. They do not affect this project if installation succeeds.
+### Tests
+
+```sh
+node --test 'tests/*.test.mjs'
+```
+
+### Windows app
+
+Needs Qt 6.8 or later (CI uses 6.11) and CMake. It also builds and runs on
+Linux for development; keeping windows visible on Win+D and starting with
+Windows only work on Windows.
+
+```sh
+cmake -S windows -B build/windows
+cmake --build build/windows
+./build/windows/TimeUntil
+```
+
+### Translations
+
+1. `scripts/extract-messages.sh` updates `po/timeuntil.pot` and merges it into
+   the `.po` files.
+2. Translate `po/<language>.po`.
+3. `scripts/build-translations.sh` compiles the files into the widget package.
+   Commit the generated `.mo` too. The Windows app reads the `.po` files when
+   it is built.
+
+To check a language, run `LANGUAGE=es plasmawindowed org.kde.kde_timeuntil`
+or `LANGUAGE=es ./build/windows/TimeUntil`.
+
+### Releases
+
+Pushing a tag such as `v1.1.0` makes CI publish the `.plasmoid`, the Windows
+installer and a portable zip as a GitHub release.
+
+## License
+
+GPL-3.0-or-later. The Windows app includes Qt under the LGPLv3; see
+`windows/installer/THIRD-PARTY-NOTICES.txt`.

@@ -2,59 +2,61 @@
 
 Thanks for your interest in KDE_timeuntil.
 
-This project is intentionally minimal and considered feature-complete for its original purpose. Maintenance is very limited.
+The project is small and maintained in spare time, so focused pull requests
+are the easiest to review.
 
 ## What Is Welcome
 
-- Critical bug fixes.
-- Compatibility fixes for newer KDE Plasma 6 / Qt 6 versions.
-- Small documentation corrections.
+- Bug fixes for the Plasma widget or the Windows app.
+- Compatibility fixes for newer Plasma, Qt or Windows versions.
+- Translations.
+- Documentation fixes.
 
-## Translation Contributions
+For new features, please open an issue first.
 
-My native language is Spanish, and the project started in Spanish-first wording.
-An English translation file is included so contributors can help improve wording and clarity.
+## Translations
 
-- Translation file: `po/en.po`
-- Scope is intentionally small (the widget has very few strings).
-- PRs with translation-only improvements are welcome.
+Source strings are in English. The Spanish translation is `po/es.po`.
 
-## What Is Probably Out of Scope
+1. Run `scripts/extract-messages.sh`.
+2. Copy `po/timeuntil.pot` to `po/<language>.po` (or edit an existing file)
+   and translate it.
+3. Run `scripts/build-translations.sh`, and commit the `.po` file together
+   with the generated `.mo`.
 
-- New features.
-- Large UI redesigns.
-- Refactors that do not solve a concrete issue.
+For now, the Windows app only supports languages whose plural rule is
+`n != 1`.
 
 ## Before Opening a Pull Request
 
-1. Check that the issue is reproducible.
-2. Keep the patch as small as possible.
-3. Test locally with:
+1. Run the unit tests: `node --test 'tests/*.test.mjs'`.
+2. For the Plasma widget:
    - `kpackagetool6 --type Plasma/Applet --upgrade plasma/`
-   - `kquitapp6 plasmashell`
-   - `plasmashell --replace >/dev/null 2>&1 & disown`
-4. Confirm the widget still:
-   - saves settings correctly,
-   - parses the date in `DD-MM-YYYY`,
-   - shows the days counter and event title.
+   - `systemctl --user restart plasma-plasmashell`
+   - Check that the settings page accepts input, the date and time pickers
+     save, and the countdown updates.
+   - `journalctl --user -b | grep kde_timeuntil` should show no QML errors.
+3. For the Windows app, build it (see the README) and check the countdown
+   windows, the settings dialog and the tray menu. Keeping windows visible
+   on Win+D can only be tested on Windows.
+4. Write commit messages following Conventional Commits, such as
+   `feat(plasma): ...` or `fix(windows): ...`.
 
 ## Pull Request Guidelines
 
-- Use a clear title and short description.
-- Explain what problem is being fixed.
-- Include before/after screenshots for UI changes.
-- Keep unrelated changes out of the same PR.
+- Use a clear title and a short description of the problem being fixed.
+- Include before and after screenshots for UI changes.
+- Keep unrelated changes out of the same pull request.
 
 ## Reporting Issues
 
-When opening an issue, please include:
+Please include:
 
-- KDE Plasma version
-- Qt version
+- Plasma and Qt versions, or the Windows version
 - Steps to reproduce
 - Expected result
 - Actual result
-- Screenshots/logs if helpful
+- Screenshots or logs if helpful
 
 ## Code of Conduct
 
