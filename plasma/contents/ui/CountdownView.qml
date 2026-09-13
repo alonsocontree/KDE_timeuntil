@@ -67,4 +67,19 @@ ColumnLayout {
         horizontalAlignment: Text.AlignHCenter
         wrapMode: Text.WordWrap
     }
+
+    Text {
+        Layout.fillWidth: true
+        visible: !!view.eventDate
+        text: view.eventDate
+            ? i18nc("@info event date and time", "%1 · %2",
+                    view.eventDate.toLocaleDateString(Qt.locale(), i18nc("@info date format, see QDate::toString", "d MMM yyyy")),
+                    view.eventDate.toLocaleTimeString(Qt.locale(), Locale.ShortFormat))
+            : ""
+        color: view.secondaryColor
+        opacity: 0.7
+        font: view.secondaryFont
+        horizontalAlignment: Text.AlignHCenter
+        wrapMode: Text.WordWrap
+    }
 }
