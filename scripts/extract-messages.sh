@@ -25,5 +25,5 @@ xgettext --from-code=UTF-8 -C --kde \
 
 for po in po/*.po; do
     [[ -e "$po" ]] || continue
-    msgmerge --quiet --update --backup=none "$po" po/timeuntil.pot
+    msgmerge --quiet --update --backup=none --no-fuzzy-matching "$po" po/timeuntil.pot
 done
